@@ -1,0 +1,45 @@
+[
+	{
+		"errMsg": "getUserProfile:ok",
+		"clientInfo": {
+			"wxdataQueueTimestamp": 1623952618711,
+			"isConfirm": true,
+			"wxlibCallbackTimestamp": 1623952621399,
+			"beginCGITimestamp": 1623952618711,
+			"queueLength": 0,
+			"beginCGITimestampAfterConfirm": 1623952621169,
+			"wxdataDequeueTimestamp": 1623952618711,
+			"CGICallbackTimestampAfterConfirm": 1623952621399,
+			"CGICallbackTimestamp": 1623952619499
+		},
+		"rawData": "{\"nickName\":\"高山流水\",\"gender\":1,\"language\":\"zh_CN\",\"city\":\"\",\"province\":\"\",\"country\":\"Iceland\",\"avatarUrl\":\"https://thirdwx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTIulibpJgDV8pNrDNmibTTRRoKVS4xianncPRLbaHR3pZ3AHLhPibQDkia5UgDb0LhVSP1LbKnPQiasj39g/132\"}",
+		"userInfo": {
+			"nickName": "高山流水",
+			"gender": 1,
+			"language": "zh_CN",
+			"city": "",
+			"province": "",
+			"country": "Iceland",
+			"avatarUrl": "https://thirdwx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTIulibpJgDV8pNrDNmibTTRRoKVS4xianncPRLbaHR3pZ3AHLhPibQDkia5UgDb0LhVSP1LbKnPQiasj39g/132"
+		},
+		"signature": "dc9c8a19782f6a95f224b742cc375de3c4e8ed73",
+		"encryptedData": "1xxMK1wCRJ7SgoT23yJglemJaOebqv9IAWiOtN9p45DHW+JxkqqVOFPZLulERG1XUsuFjA46N3lnvGa/TzmLEydfh6XsEHefAsEklwAHjn6dXzwdyUem6bpUsh/O4yJlvWh1zHd5ZFBSApvpK7f+2MZC8yEsDdoKYQfJE+dCh9UXcd8qlFZ+y4EJ37sbMM4sFOHdWkt17mCJj8XTe3Vz+x/cx97vEByIJTsl/zVV9PtwlmtwLLShmge6q6nWov9t1B2knK4rEtl8wBBqJPcxFfON3KjUcgtAz7CbeyJdl0a43ICMT36Kjia9BEIoS61iPvW/RGq9WDMHNatToxt9gjesYFKMEkhyhml0gl9G2s9KUpR9W/MdbonJbgUu2NA4/GVClYrVsGj5DsQWy+9wtw8CSLZwaC0T3bd1gmvGbBs=",
+		"iv": "ppgyT6aL8RmLMqi5CafXtw==",
+		"cloudID": "46_nTYvevWZFqjlNcOzTc7UBr8iszgvJ8MF0kmpG4pZW6D3Gl18-d_K8sYMrHo"
+	},
+	{
+		"errMsg": "login:ok",
+		"clientInfo": {
+			"wxdataQueueTimestamp": 1623952618361,
+			"isConfirm": false,
+			"wxlibCallbackTimestamp": 1623952618500,
+			"beginCGITimestamp": 1623952618361,
+			"queueLength": 0,
+			"beginCGITimestampAfterConfirm": 18446744073709552000,
+			"wxdataDequeueTimestamp": 1623952618361,
+			"CGICallbackTimestampAfterConfirm": 18446744073709552000,
+			"CGICallbackTimestamp": 1623952618499
+		},
+		"code": "061XAr000x4xTL1JM2200EeH151XAr03"
+	}
+]

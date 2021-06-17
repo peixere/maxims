@@ -1,0 +1,11 @@
+server.port: 8080
+spring:
+  redis:
+    host: 120.79.140.36
+    port: 9378
+    password: redis2&yhnM@2
+    lettuce:
+      pool:
+        min-idle: 2
+        max-idle: 5
+        max-active: 10 
