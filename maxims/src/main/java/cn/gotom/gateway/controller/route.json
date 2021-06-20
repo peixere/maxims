@@ -1,0 +1,77 @@
+[
+	{
+		"id": "iot",
+		"predicates": [
+			{
+				"name": "Path",
+				"args": {
+					"_genkey_0": "/iot/**"
+				}
+			}
+		],
+		"filters": [
+			{
+				"name": "RewritePath",
+				"args": {
+					"_genkey_0": "/iot/(?<path>.*)",
+					"_genkey_1": "/$\\{path}"
+				}
+			}
+		],
+		"uri": "lb://iot",
+		"metadata": {
+			
+		},
+		"order": 0
+	},
+	{
+		"id": "customer-service",
+		"predicates": [
+			{
+				"name": "Path",
+				"args": {
+					"_genkey_0": "/service/**"
+				}
+			}
+		],
+		"filters": [
+			{
+				"name": "RewritePath",
+				"args": {
+					"_genkey_0": "/service/(?<path>.*)",
+					"_genkey_1": "/$\\{path}"
+				}
+			}
+		],
+		"uri": "lb://customer-service",
+		"metadata": {
+			
+		},
+		"order": 0
+	},
+	{
+		"id": "iot2",
+		"predicates": [
+			{
+				"name": "Path",
+				"args": {
+					"_genkey_0": "/iot2/**"
+				}
+			}
+		],
+		"filters": [
+			{
+				"name": "RewritePath",
+				"args": {
+					"_genkey_0": "/iot2/(?<path>.*)",
+					"_genkey_1": "/$\\{path}"
+				}
+			}
+		],
+		"uri": "lb://iot",
+		"metadata": {
+			
+		},
+		"order": 0
+	}
+]

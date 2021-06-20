@@ -22,6 +22,7 @@ import org.apache.commons.lang3.BooleanUtils;
 import org.apache.commons.lang3.RandomUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.time.DateUtils;
+import org.springframework.data.annotation.ReadOnlyProperty;
 import org.springframework.data.annotation.Transient;
 
 import com.auth0.jwt.JWT;
@@ -53,7 +54,7 @@ public class Token extends TenantEntity implements Serializable {
 
 	private static final long serialVersionUID = 3461221971771880634L;
 
-	private static final long  REFRESH_TIME_INTERVAL = Duration.ofMinutes(5).toMillis();
+	private static final long REFRESH_TIME_INTERVAL = Duration.ofMinutes(5).toMillis();
 
 	public final static String ID = "sessionid";
 
@@ -89,17 +90,17 @@ public class Token extends TenantEntity implements Serializable {
 		// SECRETS.put(key, secret);
 	}
 
-	@ApiModelProperty(value = "用户名")
+	@ApiModelProperty(value = "用户帐号")
 	@Column(length = 64, updatable = false)
-	@NotBlank(message = "用户名不可以为空")
-	@Size(min = 1, max = 20, message = "用户名长度需要在20个字以内")
-	@Pattern(regexp = ValidatorUtils.USERNAME, message = "用户名必须是2-20位字母、数字、下划线")
+	@NotBlank(message = "用户帐号不可以为空")
+	@Size(min = 1, max = 20, message = "用户帐号长度需要在20个字以内")
+	@Pattern(regexp = ValidatorUtils.USERNAME, message = "用户帐号必须是2-20位字母、数字、下划线")
 	@UniqueIndex
 	private String account;
 
 	@JsonIgnore
 	@Column(length = 128, updatable = false)
-	//@Size(min = 1, max = 20, message = "用户名长度需要在20个字以内")
+	// @Size(min = 1, max = 20, message = "用户名长度需要在20个字以内")
 	private String password;
 
 	@ApiModelProperty(value = "随机盐", notes = "为提高加密强度，对用户密码加密时使用")
@@ -129,6 +130,7 @@ public class Token extends TenantEntity implements Serializable {
 	@ApiModelProperty(value = "对应平台(WEB,APP,APPLET,PUBLIC)")
 	@Transient
 	@Enumerated(EnumType.STRING)
+	@ReadOnlyProperty
 	private transient PlatformEnum platform;
 
 	@ApiModelProperty(value = "证书过期")

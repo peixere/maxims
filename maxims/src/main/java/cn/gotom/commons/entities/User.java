@@ -18,10 +18,10 @@ import org.springframework.data.relational.core.mapping.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import cn.gotom.commons.data.Deleted;
 import cn.gotom.commons.data.Forbid;
 import cn.gotom.commons.data.LinkDelete;
 import cn.gotom.commons.data.LinkDeletes;
-import cn.gotom.commons.data.SQLDelete;
 import cn.gotom.commons.utils.ValidatorUtils;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -45,7 +45,6 @@ import lombok.Setter;
 		})
 @Forbid
 @ApiModel("用户信息")
-@SQLDelete
 @LinkDeletes({ //
 		@LinkDelete(value = StructureUser.class, column = "user_id"), //
 		@LinkDelete(value = UserRole.class, column = "user_id"), //
@@ -67,10 +66,6 @@ public class User extends cn.gotom.commons.model.Token {
 		User user = new User();
 		user.setSuperAdmin(true);
 		user.setAccount(ADMIN);
-//		user.setId(User.nextId());
-//		user.setPassword(DEFAULT_PASSWORD);
-//		user.setName("超级管理员");
-//		user.setMemo("系统初始化的超级管理员角色,请不要删除");
 		return user;
 
 	}
@@ -107,6 +102,14 @@ public class User extends cn.gotom.commons.model.Token {
 	@ApiModelProperty(value = "帐户状态(0-已注册 1-已激活 2-已锁定)")
 	private Integer state;
 
+	@ApiModelProperty(value = "软删除标志(false/0:未删除 true/1:已删除)")
+	@Column()
+	@Deleted
+	private Boolean deleted;
+
+	@ApiModelProperty(value = "停用标志(false/0:未停用 true/1:已停用)")
+	private Boolean disabled;
+
 	@ApiModelProperty(value = "用户姓名")
 	@Column(length = 64)
 	@NotBlank(message = "用户姓名不可以为空")
@@ -120,11 +123,11 @@ public class User extends cn.gotom.commons.model.Token {
 	@ApiModelProperty(value = "用户类型(1-WEB端用户 2-APP用户)")
 	private Integer userType;
 
-	@ApiModelProperty(value = "身份：0-系统运维人员 1-用户/客户 10-预付费-户主")
+	@ApiModelProperty(value = "用户身份(0-系统运维人员 1-用户/客户 10-预付费-户主)")
 	@Column
 	private Integer identity;
 
-	@ApiModelProperty(value = "备注")
+	@ApiModelProperty(value = "备注信息")
 	@Column()
 	private String memo;
 

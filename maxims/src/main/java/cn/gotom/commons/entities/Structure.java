@@ -11,9 +11,9 @@ import javax.validation.constraints.NotBlank;
 import org.springframework.data.annotation.Transient;
 import org.springframework.data.relational.core.mapping.Table;
 
+import cn.gotom.commons.data.Deleted;
 import cn.gotom.commons.data.LinkDelete;
 import cn.gotom.commons.data.LinkDeletes;
-import cn.gotom.commons.data.SQLDelete;
 import cn.gotom.commons.data.UniqueIndex;
 import cn.gotom.commons.model.TenantEntity;
 import io.swagger.annotations.ApiModel;
@@ -39,7 +39,6 @@ import lombok.Setter;
 		}//
 )
 @ApiModel("组织架构")
-@SQLDelete
 @LinkDeletes({ //
 		@LinkDelete(value = StructureUser.class, column = "structure_id"), //
 		@LinkDelete(value = Role.class, column = "structure_id"), //
@@ -89,6 +88,14 @@ public class Structure extends TenantEntity {
 	@UniqueIndex({ "no", "tenantId" })
 	private Integer no;
 
+	@ApiModelProperty(value = "软删除标志(false/0:未删除 true/1:已删除)")
+	@Column()
+	@Deleted
+	private Boolean deleted;
+	
+	@ApiModelProperty(value = "停用标志(false/0:未停用 true/1:已停用)")
+	private Boolean disabled;
+	
 	@ApiModelProperty(value = "子架构", hidden = true)
 	@Transient
 	private transient List<Structure> children;

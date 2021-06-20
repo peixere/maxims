@@ -1,7 +1,6 @@
 package cn.gotom;
 
 import java.util.concurrent.Executors;
-import java.util.concurrent.RejectedExecutionException;
 import java.util.concurrent.ScheduledExecutorService;
 
 import org.springframework.context.annotation.Bean;
@@ -29,13 +28,7 @@ public class ThreadExecutor {
 	}
 
 	public static void execute(Runnable object) {
-		try {
-			executorService.execute(object);
-		} catch (RejectedExecutionException ex) {
-			log.error(ex.getMessage());
-		} catch (Throwable ex) {
-			log.error("", ex);
-		}
+		executorService.execute(object);
 	}
 
 	public static void shutdown() {

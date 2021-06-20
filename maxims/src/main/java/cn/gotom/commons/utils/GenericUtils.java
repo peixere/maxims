@@ -41,6 +41,21 @@ public class GenericUtils {
 		}
 	}
 
+	public static Class<?> isClass(String className) {
+		try {
+			return org.apache.commons.lang3.ClassUtils.getClass(className);
+		} catch (Throwable e) {
+			log.warn(e.getMessage());
+			try {
+				String packageName = CustomException.class.getPackageName();
+				return org.apache.commons.lang3.ClassUtils.getClass(packageName + "." + className);
+			} catch (Throwable ex) {
+				log.warn(ex.getMessage());
+				throw new RuntimeException(e);
+			}
+		}
+	}
+	
 	public static Class<?> getUniversalClass(String className) {
 		Class<?> clazz = getClass(className);
 		if (clazz.isAnnotationPresent(Forbid.class)) {

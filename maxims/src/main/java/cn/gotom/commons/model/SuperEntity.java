@@ -10,7 +10,11 @@ import org.springframework.data.domain.Sort.Direction;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import cn.gotom.commons.Note;
+import cn.gotom.commons.data.Created;
+import cn.gotom.commons.data.Creater;
 import cn.gotom.commons.data.OrderBy;
+import cn.gotom.commons.data.Updated;
+import cn.gotom.commons.data.Updater;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 import lombok.Setter;
@@ -43,36 +47,37 @@ public abstract class SuperEntity extends IDEntity {
 	public static final String TIMEZONE = "GMT+8";
 	@Note("通配符")
 	public static final String WILDCARD = "*";
-	@Note("创建时间字段（所有表共有）")
-	public static final String CREATED_COLUMN = "create_time";
-	public static final String DELETED_COLUMN = "deleted";
 
 	@ApiModelProperty(value = "创建时间", hidden = true)
 	@Column(updatable = false)
 	@JsonIgnore
 	@OrderBy(value = Direction.DESC, order = -1)
+	@Created
 	private LocalDateTime createTime;
 
 	@ApiModelProperty(value = "创建人", hidden = true)
 	@Column(length = 50, updatable = false)
+	@Creater
 	private String creater;
 
 	@JsonIgnore
 	@ApiModelProperty(value = "更新时间", hidden = true)
 	@Column(nullable = false)
+	@Updated
 	private LocalDateTime editTime;
 
 	@ApiModelProperty(value = "更新人", hidden = true)
 	@Column(length = 50, nullable = false)
+	@Updater
 	private String updater;
 
-	@ApiModelProperty(value = "软删除标志(false/0:未删除 true/1:已删除)")
-	@Column(name = DELETED_COLUMN, updatable = false)
-	private Boolean deleted;
+//	@ApiModelProperty(value = "软删除标志(false/0:未删除 true/1:已删除)")
+//	@Column()
+//	@Deleted
+//	private Boolean deleted;
 
-	@ApiModelProperty(value = "停用标志(false/0:未停用 true/1:已停用)")
-	@Column(updatable = false)
-	private Boolean disabled;
+//	@ApiModelProperty(value = "停用标志(false/0:未停用 true/1:已停用)")
+//	private Boolean disabled;
 
 //	@ApiModelProperty(value = "版本号(乐观锁)", notes = "乐观锁")
 //	@Column(updatable = false)

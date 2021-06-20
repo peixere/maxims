@@ -1,11 +1,80 @@
-server.port: 8080
+server:
+  port: 8080
+  
+spring.webflux.format.date: yyyy-MM-dd HH:mm:ss
+spring.jackson.default-property-inclusion: non-null
+spring.jackson.date-format: yyyy-MM-dd HH:mm:ss
+spring.jackson.time-zone: GMT+8  
+server.servlet.encoding.enabled: true
+server.servlet.encoding.force: true
+server.servlet.encoding.charset: UTF-8
+
 spring:
+  banner:
+    charset: utf-8
+    location: classpath:banner.txt
+#http://www.network-science.de/ascii/    
+  application:
+    name: gateway
+        
+  thymeleaf:
+    check-template: false
+    enabled: true
+    reactive:
+      max-chunk-size: 8192
+        
   redis:
-    host: 120.79.140.36
+    host: 119.91.82.98
     port: 9378
     password: redis2&yhnM@2
     lettuce:
       pool:
         min-idle: 2
         max-idle: 5
-        max-active: 10 
+        max-active: 10   
+                
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          enabled: true   
+          
+      routes: 
+      - id: iot
+        uri: lb://iot
+        predicates:
+        - Path=/iot/**
+        filters:
+        - RewritePath=/iot/(?<path>.*), /$\{path}
+      - id: ems
+        uri: http://120.79.140.36:8000
+        filters:
+        - RewritePath=/ems/(?<path>.*), /$\{path}
+        predicates:
+        - Path=/ems/**
+
+r2dbc:
+  datasource:
+    name: kakka
+    properties:
+    - id: A0001
+      group: master
+      patterns: [save*,update*,insert*,delete*,remove*,execute*]
+      url: r2dbcs:mysql://119.91.82.98:9306/gateway?useUnicode=true&characterEncoding=UTF-8&zeroDateTimeBehavior=convertToNull&serverTimezone=Asia/Shanghai&useSSL=false&allowPublicKeyRetrieval=true
+      username: maxims
+      password: Ke8lkmTGnJEDhYZVz7xSo9PtANuU
+      pool:
+        initial-size: 5
+    - id: A0002
+      group: slave
+      patterns: [get*,find*,search*,exist*,count*,page*,query*,load*,native*]
+      url: r2dbcs:mysql://119.91.82.98:9306/gateway?useUnicode=true&characterEncoding=UTF-8&zeroDateTimeBehavior=convertToNull&serverTimezone=Asia/Shanghai&useSSL=false&allowPublicKeyRetrieval=true
+      username: maxims
+      password: Ke8lkmTGnJEDhYZVz7xSo9PtANuU
+      pool:
+        initial-size: 5   
+
+management.endpoint.shutdown.enabled: true
+management.endpoints.web.exposure.include: shutdown  
+  
+  

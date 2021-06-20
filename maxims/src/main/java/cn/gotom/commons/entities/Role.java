@@ -46,20 +46,6 @@ import lombok.Setter;
 public class Role extends TenantEntity {
 
 	private static final long serialVersionUID = 1892273722398118670L;
-//	private static final String ADMIN = "超级管理员";
-//	private static final Role SUPERADMIN = of();
-//
-//	private static Role of() {
-//		Role role = new Role();
-//		role.setSuperAdmin(true);
-//		role.setName(Role.ADMIN);
-//		role.setAuthorities("/**");
-//		return role;
-//	}
-//
-//	public static Role admin() {
-//		return SUPERADMIN;
-//	}
 
 	@ApiModelProperty(value = "角色名称")
 	@Column(length = 100)
@@ -76,21 +62,24 @@ public class Role extends TenantEntity {
 	@ApiModelProperty(value = "组织架构ID")
 	@Column(nullable = false)
 	private String structureId;
-
-	@ApiModelProperty(value = "组织名称")
-	@ReadOnlyProperty
-	private transient String structure;
 	
 	@ApiModelProperty(value = "角色权限")
 	@Column(updatable = false)
 	private String authorities;
 
+	@ApiModelProperty(value = "停用标志(false/0:未停用 true/1:已停用)")
+	private Boolean disabled;
 
 	@Note("角色权限")
 	public List<String> authorities() {
 		return TextUtils.split(authorities);
 	}
 
+
+	@ApiModelProperty(value = "组织名称")
+	@ReadOnlyProperty
+	private transient String structure;
+	
 	@ApiModelProperty(value = "拥有功能ID", notes = "角色配置时使用")
 	@Transient
 	private transient List<String> rightIdList;

@@ -1,5 +1,9 @@
 package cn.gotom.commons.config;
 
+import java.util.concurrent.Executor;
+
+import com.alibaba.nacos.api.config.listener.Listener;
+
 import cn.gotom.commons.listener.GenericListener;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -12,7 +16,7 @@ import lombok.extern.slf4j.Slf4j;
 @Getter
 @Slf4j
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
-final class ConfigListener {
+final class ConfigListener implements Listener {
 
 	private final @NonNull String dataId;
 	private final @NonNull String group;
@@ -24,9 +28,17 @@ final class ConfigListener {
 		return new ConfigListener(dataId, group, listener);
 	}
 
+	@Override
+	public Executor getExecutor() {
+		return null;
+	}
+
+	@Override
 	public void receiveConfigInfo(String config) {
 		try {
-			log.info(String.format("receive [group=%s, dataId=%s] %s", group, dataId, config));
+			if (log.isDebugEnabled()) {
+				log.info(String.format("receive [group=%s, dataId=%s] %s", group, dataId, config));
+			}
 			if (config != null && config.equals(configInfo)) {
 				return;
 			}

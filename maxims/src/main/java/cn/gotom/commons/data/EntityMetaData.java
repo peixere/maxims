@@ -3,7 +3,9 @@ package cn.gotom.commons.data;
 import java.beans.PropertyDescriptor;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -16,6 +18,8 @@ import javax.persistence.Entity;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.data.relational.core.mapping.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import cn.gotom.commons.Note;
 import cn.gotom.commons.json.JSON;
@@ -39,29 +43,38 @@ public class EntityMetaData {
 	private boolean entity = true;
 	private String name;
 	private String table;
-	private boolean sqlDeleted;
-	private String deleteColumn;
-	private EntityProperties id;
-	private EntityProperties version;
 	@Note("所有持久化字段 Map<变量名, 属性>")
+	@JsonIgnore
 	private Map<String, EntityProperties> props;
 	private org.springframework.data.domain.Sort sort;
-
+	@JsonIgnore
 	private LinkDelete[] linkDeletes;
+
+	private EntityProperties id;
+	private EntityProperties version;
+	private EntityProperties created;
+	private EntityProperties creater;
+	private EntityProperties deleted;
+	private EntityProperties updated;
+	private EntityProperties updater;
+	private EntityProperties tenantId;
+	private EntityProperties userId;
 
 	EntityMetaData(Class<?> clazz, boolean entityFlag) {
 		this.setClazz(clazz);
 		this.setName(clazz.getSimpleName());
 		this.setEntity(entityFlag);
-		this.setDeleteColumn(sqlDelete(clazz));
 		if (isEntity()) {
 			initEntity();
 		}
 		LinkDeletes linkDeletes = clazz.getAnnotation(LinkDeletes.class);
 		if (linkDeletes != null) {
-			this.setLinkDeletes(linkDeletes.value());
+			this.linkDeletes = linkDeletes.value();
 		}
 		initProps();
+		if (log.isDebugEnabled()) {
+			log.debug(JSON.format(this));
+		}
 	}
 
 	private void initEntity() {
@@ -88,9 +101,6 @@ public class EntityMetaData {
 		for (Field field : fields) {
 			PropertyDescriptor pd = BeanUtils.getPropertyDescriptor(getClazz(), field.getName());
 			EntityProperties prop = new EntityProperties(field, pd);
-			if (log.isDebugEnabled()) {
-				log.debug(JSON.format(prop));
-			}
 			if (prop.isPersistable()) {
 				if (!props.containsKey(prop.getName())) {
 					props.put(prop.getName(), prop);
@@ -99,6 +109,27 @@ public class EntityMetaData {
 					}
 					if (prop.isVersion()) {
 						setVersion(prop);
+					}
+					if (prop.isCreated()) {
+						created = prop;
+					}
+					if (prop.isCreater()) {
+						creater = prop;
+					}
+					if (prop.isUpdated()) {
+						updated = prop;
+					}
+					if (prop.isUpdater()) {
+						updater = prop;
+					}
+					if (prop.isDeleted()) {
+						deleted = prop;
+					}
+					if (prop.isUserId()) {
+						this.userId = prop;
+					}
+					if (prop.isTenantId()) {
+						this.tenantId = prop;
 					}
 				} else {
 					EntityProperties propHas = props.get(prop.getName());
@@ -141,14 +172,17 @@ public class EntityMetaData {
 		return fieldNames;
 	}
 
+	@JsonIgnore
 	public Collection<EntityProperties> getProperties() {
 		return props.values();
 	}
 
+	@JsonIgnore
 	public Set<String> getFieldSet() {
 		return props.keySet();
 	}
 
+	@JsonIgnore
 	public EntityProperties getProperty(String name) {
 		EntityProperties prop = props.get(name);
 		if (prop == null) {
@@ -157,24 +191,30 @@ public class EntityMetaData {
 		return prop;
 	}
 
+	@JsonIgnore
 	public Field getField(String name) {
 		EntityProperties prop = props.get(name);
 		return prop != null ? prop.getField() : null;
 	}
 
-	private String sqlDelete(Class<?> klass) {
-		Class<?> clazz = klass;
-		while (clazz != null) {
-			SQLDelete logicDelete = clazz.getAnnotation(SQLDelete.class);
-			if (null != logicDelete) {
-				sqlDeleted = true;
-				return logicDelete.field();
-			}
-			clazz = clazz.getSuperclass();
+	public Map<String, String> getLinkDeleteMap() {
+		Map<String, String> map = new HashMap<>();
+		for (LinkDelete link : getLinkDeletes()) {
+			map.put(link.value().getName(), link.column());
 		}
-		return null;
+		return map;
 	}
 
+	@JsonIgnore
+	public List<LinkDelete> getLinkDeletes() {
+		if (linkDeletes != null) {
+			return Arrays.asList(linkDeletes);
+		} else {
+			return Collections.emptyList();
+		}
+	}
+
+	@JsonIgnore
 	public static EntityMetaData get(Class<?> klass, boolean isEntity) {
 		final EntityMetaData metadata;
 		if (cache.containsKey(klass)) {

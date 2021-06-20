@@ -100,6 +100,9 @@ public class Right extends SuperEntity {
 	@ApiModelProperty(value = "子功能", hidden = true)
 	@Transient
 	private transient List<Right> children;
+	
+	@ApiModelProperty(value = "停用标志(false/0:未停用 true/1:已停用)")
+	private Boolean disabled;	
 
 	@Note("权限数据")
 	public List<String> authorities() {

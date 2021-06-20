@@ -12,10 +12,10 @@ import cn.gotom.commons.Note;
 @Target({ ElementType.TYPE })
 @Retention(RUNTIME)
 public @interface LinkDelete {
-	
+
 	@Note("对应实体类")
 	Class<?> value();
-	
+
 	@Note("对应字段")
 	String column();
 }

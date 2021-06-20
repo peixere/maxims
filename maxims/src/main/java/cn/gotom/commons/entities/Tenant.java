@@ -11,8 +11,8 @@ import org.springframework.data.relational.core.mapping.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import cn.gotom.commons.data.Deleted;
 import cn.gotom.commons.data.ForeignKey;
-import cn.gotom.commons.data.SQLDelete;
 import cn.gotom.commons.model.SuperEntity;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -31,7 +31,6 @@ import lombok.Setter;
 		}//
 )
 @ApiModel("租户信息")
-@SQLDelete
 public class Tenant extends SuperEntity {
 
 	private static final long serialVersionUID = 1892273722398118670L;
@@ -91,6 +90,14 @@ public class Tenant extends SuperEntity {
 	@JsonIgnore
 	private Boolean superAdmin;
 
+	@ApiModelProperty(value = "软删除标志(false/0:未删除 true/1:已删除)")
+	@Column()
+	@Deleted
+	private Boolean deleted;
+	
+	@ApiModelProperty(value = "停用标志(false/0:未停用 true/1:已停用)")
+	private Boolean disabled;
+	
 	private void setSuperAdmin(Boolean superAdmin) {
 		this.superAdmin = superAdmin;
 	}

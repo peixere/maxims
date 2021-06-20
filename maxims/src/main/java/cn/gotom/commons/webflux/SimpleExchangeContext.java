@@ -87,9 +87,6 @@ public class SimpleExchangeContext {
 			if (log.isDebugEnabled()) {
 				log.debug("set " + this.toString());
 			}
-			if (token == null) {
-				// token = Token.empty();
-			}
 		}
 	}
 
@@ -98,7 +95,7 @@ public class SimpleExchangeContext {
 	}
 
 	public Token getToken() {
-		return token;
+		return token != null ? token : Token.empty();
 	}
 
 	public void setToken(Token token) {
