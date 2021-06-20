@@ -259,7 +259,7 @@ abstract class RepositoryImpl<T, ID extends Serializable> extends WebAbsContext 
 	}
 
 	protected void setTenantId(T entity, Token token) {
-		if (meta.getTenantId() != null) {
+		if (token!= null && meta.getTenantId() != null) {
 			ObjectUtils.writeFieldIfNull(entity, meta.getTenantId().getName(), token.getTenantId());
 		}
 	}

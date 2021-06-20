@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+<title>Success</title>
+<meta charset="UTF-8">
+</head>
+<script type="text/javascript">
+	var getCoordInDocumentExample = function() {
+		var coords = document.getElementById("coords");
+		var xDown = 0;
+		var yDown = 0;
+		var xUp = 0;
+		var yUp = 0;
+		coords.onmousemove = function(e) {
+			var pointer = getCoordInDocument(e);
+			var coord = document.getElementById("coord");
+			xUp = pointer.x - coords.offsetLeft;
+			yUp = pointer.y - coords.offsetTop;
+			coord.innerHTML = "X,Y onmousedown(" + xDown + ", " + yDown
+					+ ")  onmousedown(" + xUp + ", " + yUp + ")";
+		};
+		coords.onmousedown = function(e) {
+			var pointer = getCoordInDocument(e);
+			var coord = document.getElementById("coord");
+			xUp = xDown = pointer.x - coords.offsetLeft;
+			yUp = yDown = pointer.y - coords.offsetTop;
+
+			coord.innerHTML = "X,Y onmousedown(" + xDown + ", " + yDown
+					+ ")  onmousedown(" + xUp + ", " + yUp + ")";
+		};
+		coords.onmouseup = function(e) {
+			var pointer = getCoordInDocument(e);
+			var coord = document.getElementById("coord");
+			xUp = pointer.x - coords.offsetLeft;
+			yUp = pointer.y - coords.offsetTop;
+			coord.innerHTML = "X,Y onmousedown(" + xDown + ", " + yDown
+					+ ")  onmousedown(" + xUp + ", " + yUp + ")";
+		};
+	}
+	var getCoordInDocument = function(e) {
+		e = e || window.event;
+		var x = e.pageX
+				|| (e.clientX + (document.documentElement.scrollLeft || document.body.scrollLeft));
+		var y = e.pageY
+				|| (e.clientY + (document.documentElement.scrollTop || document.body.scrollTop));
+		return {
+			'x' : x,
+			'y' : y
+		};
+	}
+	window.onload = function() {
+		getCoordInDocumentExample();
+	};
+</script>
+<body>
+	<div id="index" style="width: 500px;">
+		<a href="/welcome.html">index</a>
+	</div>
+	<br />
+	<div id="coords" style="width: 500px; height: 200px; background: #F2F1D7; border: 2px solid #0066cc;">请在此移动鼠标。</div>
+	<br />
+	<div id="coord" style="width: 500px; border: 2px solid #336699;">&nbsp;</div>
+</body>
+</html>

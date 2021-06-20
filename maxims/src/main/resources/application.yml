@@ -60,7 +60,7 @@ r2dbc:
     - id: A0001
       group: master
       patterns: [save*,update*,insert*,delete*,remove*,execute*]
-      url: r2dbcs:mysql://119.91.82.98:9306/gateway?useUnicode=true&characterEncoding=UTF-8&zeroDateTimeBehavior=convertToNull&serverTimezone=Asia/Shanghai&useSSL=false&allowPublicKeyRetrieval=true
+      url: r2dbcs:mysql://119.91.82.98:9306/maxims?useUnicode=true&characterEncoding=UTF-8&zeroDateTimeBehavior=convertToNull&serverTimezone=Asia/Shanghai&useSSL=false&allowPublicKeyRetrieval=true
       username: maxims
       password: Ke8lkmTGnJEDhYZVz7xSo9PtANuU
       pool:
@@ -68,7 +68,7 @@ r2dbc:
     - id: A0002
       group: slave
       patterns: [get*,find*,search*,exist*,count*,page*,query*,load*,native*]
-      url: r2dbcs:mysql://119.91.82.98:9306/gateway?useUnicode=true&characterEncoding=UTF-8&zeroDateTimeBehavior=convertToNull&serverTimezone=Asia/Shanghai&useSSL=false&allowPublicKeyRetrieval=true
+      url: r2dbcs:mysql://119.91.82.98:9306/maxims?useUnicode=true&characterEncoding=UTF-8&zeroDateTimeBehavior=convertToNull&serverTimezone=Asia/Shanghai&useSSL=false&allowPublicKeyRetrieval=true
       username: maxims
       password: Ke8lkmTGnJEDhYZVz7xSo9PtANuU
       pool:

@@ -95,7 +95,8 @@ public class SimpleExchangeContext {
 	}
 
 	public Token getToken() {
-		return token != null ? token : Token.empty();
+		return token;
+		//return token != null ? token : Token.empty();
 	}
 
 	public void setToken(Token token) {

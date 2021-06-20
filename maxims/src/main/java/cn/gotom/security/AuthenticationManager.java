@@ -53,7 +53,7 @@ public class AuthenticationManager implements ReactiveAuthenticationManager {
 			return Mono.error(new BadCredentialsException("用户不能为空"));
 		}
 		Token form = ((AuthenticationToken) authentication).getDetails();
-		return securityService.getByUsername(form.getAccount())//
+		return securityService.login(form)//
 				.switchIfEmpty(Mono.error(new BadCredentialsException("请输入正确的用户和密码")))//
 				.flatMap(user -> authenticate(user, authentication));
 	}
