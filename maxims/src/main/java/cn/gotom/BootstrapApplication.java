@@ -9,7 +9,7 @@ import org.springframework.context.annotation.ComponentScan;
 @EnableAutoConfiguration
 @EnableDiscoveryClient
 @SpringBootApplication
-@ComponentScan({ "com.zhnaste" })
+@ComponentScan({ "cn.gotom" })
 public class BootstrapApplication {
 
 	public static void main(String[] args) {

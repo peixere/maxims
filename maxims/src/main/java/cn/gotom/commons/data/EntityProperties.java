@@ -19,6 +19,8 @@ import javax.persistence.Temporal;
 import javax.persistence.Transient;
 import javax.persistence.Version;
 
+import org.apache.commons.lang3.StringUtils;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import cn.gotom.commons.model.Sorted;
@@ -189,8 +191,8 @@ public class EntityProperties {
 
 	private String comment() {
 		ApiModelProperty amp = getAnnotation(ApiModelProperty.class);
-		if (amp != null) {
-			return amp.value().split("(")[0];
+		if (amp != null && StringUtils.isNotBlank(amp.value())) {
+			return amp.value().split("\\(")[0];
 		}
 		return field.getName();
 	}

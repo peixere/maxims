@@ -57,7 +57,7 @@ public class AspectController extends WebAbsContext implements Ordered {
 		return HIGHEST_PRECEDENCE;
 	}
 
-	@Pointcut("execution(* com.zhnaste..*Controller..*(..))")
+	@Pointcut("execution(* cn.gotom..*Controller..*(..))")
 	public void pointcut() {
 
 	}

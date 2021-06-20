@@ -123,8 +123,8 @@ public class UserManager extends GenericManagerImpl<User, String> {
 		if (StringUtils.isBlank(e.getId())) {
 			e.setId(Tenant.nextId());
 		}
-		e.setName("珠海纳思特");
-		e.setTitle("珠海纳思特科技股份有限公司");
+		e.setName("澳门美心");
+		e.setTitle(e.getName());
 		e.setCompany(e.getTitle());
 		e.setAddress("地址");
 		e.setBoard("board");

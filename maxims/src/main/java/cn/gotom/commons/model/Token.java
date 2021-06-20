@@ -229,7 +229,7 @@ public class Token extends TenantEntity implements Serializable {
 			array[8] = token.getPlatform().name();
 			array[9] = ObjectUtils.toStringTrueFalse(token.getSuperAdmin());
 			builder.withAudience(array);
-			builder.withIssuer("zhnaste.com");// 签发者
+			builder.withIssuer("maximacao.com");// 签发者
 			builder.withIssuedAt(new Date());// 生成时间
 			builder.withExpiresAt(DateUtils.addDays(new Date(), 7));
 			token.setAccess(builder.sign(algorithm) + SEPARATOR + pair.getFirst());

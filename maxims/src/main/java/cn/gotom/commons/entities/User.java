@@ -54,7 +54,7 @@ public class User extends cn.gotom.commons.model.Token {
 
 	private static final long serialVersionUID = -7066074229094495156L;
 	private static final String ADMIN = "admin";
-	public static final String DEFAULT_PASSWORD = "naste123456";
+	public static final String DEFAULT_PASSWORD = "123456";
 	private static final User SUPERADMIN = admin();
 
 	private static final User EMPTY = empty();

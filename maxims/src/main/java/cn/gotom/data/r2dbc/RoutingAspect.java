@@ -27,7 +27,7 @@ public class RoutingAspect implements Ordered {
 		this.connectionFactory = connectionFactory;
 	}
 
-	@Pointcut("execution(* com.zhnaste..service..*(..))")
+	@Pointcut("execution(* cn.gotom..service..*(..))")
 	public void pointcut() {
 
 	}

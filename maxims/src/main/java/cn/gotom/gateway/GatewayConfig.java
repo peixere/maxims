@@ -10,7 +10,7 @@ import org.springframework.web.cors.reactive.CorsConfigurationSource;
 import org.springframework.web.cors.reactive.CorsWebFilter;
 import org.springframework.web.cors.reactive.UrlBasedCorsConfigurationSource;
 
-@EntityScan({ "com.zhnaste.commons", "com.zhnaste.ems" })
+@EntityScan({ "cn.gotom" })
 @Configuration
 public class GatewayConfig {
 
