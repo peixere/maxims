@@ -96,9 +96,19 @@ public class SecurityUserManager extends GenericManagerImpl<User, String> implem
 		return wechatUserService.save(user);
 	}
 
+//    account: res.code, //临时登录凭证
+//    password: userProfile.rawData, //用户非敏感信息
+//    access: userProfile.signature, //签名
+//    refresh: userProfile.encryptedData, //用户敏感信息
+//    captcha: userProfile.iv, //解密算法的向量
+//    platform: 'APPLET'
 	private WechatUser wechatCode2session(final Token form) {
+		form.setRememberMe(true);
 		WechatUser user = JSON.parseObject(form.getPassword(), WechatUser.class);
 		user.setCode(form.getAccount());
+		user.setRawData(form.getPassword());
+		user.setSignature(form.getAccess());
+		user.setEncryptedData(form.getRefresh());
 		String requestUrl = "https://api.weixin.qq.com/sns/jscode2session";
 		Map<String, String> parameters = new HashMap<String, String>();
 		parameters.put("appid", wechatAppid);

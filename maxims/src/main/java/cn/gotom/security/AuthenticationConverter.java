@@ -95,6 +95,8 @@ public class AuthenticationConverter implements ServerAuthenticationConverter {
 		form.setAccount((String) data.get(usernameParameter));
 		form.setPassword((String) data.get(passwordParameter));
 		form.setCaptcha((String) data.get(captchaParameter));
+		form.setAccess((String) data.get(Token.ACCESS));
+		form.setRefresh((String) data.get(Token.REFRESH));
 		form.setPlatform(PlatformEnum.of((String) data.get(platformParameter)));
 		form.setRememberMe(BooleanUtils.toBoolean(rememberMe));
 		if (form.getPlatform() == null) {
