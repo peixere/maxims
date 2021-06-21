@@ -1,4 +1,4 @@
-package cn.gotom.gateway.controller;
+package cn.gotom;
 
 import java.util.List;
 
@@ -12,18 +12,22 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import cn.gotom.gateway.GatewayConfig;
-import cn.gotom.gateway.m.GatewayPropertiesManager;
 import io.swagger.annotations.Api;
+import reactor.core.publisher.Mono;
 
 @Api(tags = "100.动态路由")
 @RestController
-@RequestMapping(name = "动态路由", value = GatewayConfig.PATH)
+@RequestMapping(name = "动态路由")
 @RefreshScope
-public class RouteController {
+public class GatewayRouteController {
 
 	@Autowired
 	private GatewayPropertiesManager gatewayPropertiesManager;
+
+	@GetMapping(name = "首页")
+	public Mono<List<RouteDefinition>> index() {
+		return Mono.just(gatewayPropertiesManager.getRouteDefinitions());
+	}
 
 	/**
 	 * 增加路由
@@ -32,22 +36,22 @@ public class RouteController {
 	 * @return
 	 */
 	@PostMapping("/route/add")
-	public String add(@RequestBody RouteDefinition definition) {
-		return gatewayPropertiesManager.add(definition);
+	public Mono<String> add(@RequestBody RouteDefinition definition) {
+		return Mono.just(gatewayPropertiesManager.add(definition));
 	}
 
 	@GetMapping("/route/delete/{id}")
-	public String delete(@PathVariable String id) {
-		return gatewayPropertiesManager.delete(id);
+	public Mono<String> delete(@PathVariable String id) {
+		return Mono.just(gatewayPropertiesManager.delete(id));
 	}
 
 	@PostMapping("/route/update")
-	public String update(@RequestBody RouteDefinition definition) {
-		return gatewayPropertiesManager.update(definition);
+	public Mono<String> update(@RequestBody RouteDefinition definition) {
+		return Mono.just(gatewayPropertiesManager.update(definition));
 	}
 
 	@GetMapping("/route")
-	public List<RouteDefinition> list() {
-		return gatewayPropertiesManager.getRouteDefinitions();
+	public Mono<List<RouteDefinition>> route() {
+		return Mono.just(gatewayPropertiesManager.getRouteDefinitions());
 	}
 }

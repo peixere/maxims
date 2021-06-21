@@ -10,19 +10,7 @@ server.servlet.encoding.force: true
 server.servlet.encoding.charset: UTF-8
 
 spring:
-  banner:
-    charset: utf-8
-    location: classpath:banner.txt
-#http://www.network-science.de/ascii/    
-  application:
-    name: gateway
-        
-  thymeleaf:
-    check-template: false
-    enabled: true
-    reactive:
-      max-chunk-size: 8192
-        
+
   redis:
     host: 119.91.82.98
     port: 9378
@@ -40,39 +28,12 @@ spring:
           enabled: true   
           
       routes: 
-      - id: iot
-        uri: lb://iot
-        predicates:
-        - Path=/iot/**
+      - id: mx
+        uri: http://120.79.140.36:8080
         filters:
-        - RewritePath=/iot/(?<path>.*), /$\{path}
-      - id: ems
-        uri: http://120.79.140.36:8000
-        filters:
-        - RewritePath=/ems/(?<path>.*), /$\{path}
+        - RewritePath=/mx/(?<path>.*), /$\{path}
         predicates:
-        - Path=/ems/**
-
-r2dbc:
-  datasource:
-    name: kakka
-    properties:
-    - id: A0001
-      group: master
-      patterns: [save*,update*,insert*,delete*,remove*,execute*]
-      url: r2dbcs:mysql://119.91.82.98:9306/maxims?useUnicode=true&characterEncoding=UTF-8&zeroDateTimeBehavior=convertToNull&serverTimezone=Asia/Shanghai&useSSL=false&allowPublicKeyRetrieval=true
-      username: maxims
-      password: Ke8lkmTGnJEDhYZVz7xSo9PtANuU
-      pool:
-        initial-size: 5
-    - id: A0002
-      group: slave
-      patterns: [get*,find*,search*,exist*,count*,page*,query*,load*,native*]
-      url: r2dbcs:mysql://119.91.82.98:9306/maxims?useUnicode=true&characterEncoding=UTF-8&zeroDateTimeBehavior=convertToNull&serverTimezone=Asia/Shanghai&useSSL=false&allowPublicKeyRetrieval=true
-      username: maxims
-      password: Ke8lkmTGnJEDhYZVz7xSo9PtANuU
-      pool:
-        initial-size: 5   
+        - Path=/mx/**
 
 management.endpoint.shutdown.enabled: true
 management.endpoints.web.exposure.include: shutdown  

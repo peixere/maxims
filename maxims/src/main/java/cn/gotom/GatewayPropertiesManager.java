@@ -1,9 +1,7 @@
-package cn.gotom.gateway.m;
+package cn.gotom;
 
 import java.util.List;
 import java.util.stream.Collectors;
-
-import javax.annotation.PostConstruct;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.gateway.config.GatewayProperties;
@@ -13,21 +11,14 @@ import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.context.ApplicationEventPublisherAware;
 import org.springframework.stereotype.Component;
 
-import cn.gotom.commons.config.ConfigManager;
-import cn.gotom.commons.json.JSON;
 import lombok.extern.slf4j.Slf4j;
 
 @Component
 @Slf4j
 public class GatewayPropertiesManager implements ApplicationEventPublisherAware {
 
-	private final String DATAID = "route";
-
 	@Autowired
 	private GatewayProperties gatewayProperties;
-
-	@Autowired
-	private ConfigManager configManager;
 
 	private ApplicationEventPublisher publisher;
 
@@ -36,23 +27,6 @@ public class GatewayPropertiesManager implements ApplicationEventPublisherAware 
 
 	public GatewayProperties getGatewayProperties() {
 		return gatewayProperties;
-	}
-
-	@PostConstruct
-	public String init() {
-		configManager.register(DATAID, config -> listener(config));
-		return "success";
-	}
-
-	private void listener(String configInfo) {
-		List<RouteDefinition> definitions = JSON.parseList(configInfo, RouteDefinition.class);
-		if (definitions != null) {
-			refresh(definitions);
-		}
-	}
-
-	public String getName() {
-		return DATAID;
 	}
 
 	/**

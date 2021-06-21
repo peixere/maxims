@@ -6,7 +6,6 @@ import java.util.List;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import cn.gotom.commons.model.Token;
 import springfox.documentation.builders.ApiInfoBuilder;
 import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.builders.RequestHandlerSelectors;
@@ -24,14 +23,14 @@ public class SwaggerConfiguration {
 	public Docket swaggerApi() {
 		List<RequestParameter> pars = new ArrayList<>();
 		RequestParameterBuilder builder = new RequestParameterBuilder();
-		builder.name(Token.ACCESS)//
+		builder.name("access")//
 				.description("token")//
 				.in(ParameterType.HEADER)//
 				.required(false)//
 				.build(); //
 		pars.add(builder.build());
 		builder = new RequestParameterBuilder();
-		builder.name(Token.REFRESH)//
+		builder.name("refresh")//
 				.description("token")//
 				.in(ParameterType.HEADER)//
 				.required(false)//
